@@ -1,5 +1,10 @@
 // настройте некоторые переменные Bootstrap
 $brand-primary:         darken(#428bca, 20%);
 
+#filter > div > div {
+    padding-top: 10px;
+    border: 1px solid #dddddd;
+    margin: 0px 15px;
+}
 // ~ позволяет вам ссылаться на вещи в node_modules
 @import '~bootstrap-sass/assets/stylesheets/bootstrap';

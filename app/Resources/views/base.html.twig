@@ -2,6 +2,9 @@
 <html>
     <head>
         <meta charset="UTF-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	    <meta name="language" content="en" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
@@ -11,7 +14,24 @@
     <body>
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
-        <div id="root" class="container-fluid"></div>
+        <div id="container" class="container-fluid">     
+            <div class="col-md-7">
+                <div class="row">      
+                    <div class="col-md-12">
+                        <h2>Плэйлист</h2>
+                    </div>          
+                    <div id="table" class="col-md-12"></div>
+                </div>
+            </div>          
+            <div class="col-md-3">
+                <div class="row">      
+                    <div class="col-md-12">
+                        <h2>Фильтр</h2>
+                    </div>          
+                    <div id="filter" class="col-md-12"></div>
+                </div>
+            </div>            
+        </div>
         <!-- ... -->
         <script src="{{ asset('build/app.js') }}"></script>
     </body>    

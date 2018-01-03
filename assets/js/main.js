@@ -1,7 +1,3 @@
-//var React = require('react');
-//var ReactDOM = require('react-dom');
-//var createReactClass = require('create-react-class');
-
 // JS эквивалентно любому нормальному пакету "bootstrap"
 // не надо устанавливать это в переменную, просо запросите его
 require('bootstrap-sass');
@@ -12,15 +8,11 @@ var $ = require('jquery');
 // импортировать функцию из Table.js (расширение .js необязательно)
 // ./ (or ../) means to look for a local file
 var Table = require('./Table');
+var create_table = Table();
 
-var t = Table();
-
-
-// импортировать функцию из React.js (расширение .js необязательно)
+// импортировать функцию из Filter.js
 // ./ (or ../) means to look for a local file
-var React = require('react');
-var ReactDOM = require('react-dom');
+var Filter = require('./Filter');
+var create_filter = Filter();
 
-//console.log(React);
-//console.log('======================');
-//console.log(ReactDOM);
+
