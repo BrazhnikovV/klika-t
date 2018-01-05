@@ -6,5 +6,37 @@ $brand-primary:         darken(#428bca, 20%);
     border: 1px solid #dddddd;
     margin: 0px 15px;
 }
+#table { 
+    padding: 0px 5px 5px 5px;
+    background: #f9f6f6;
+    box-shadow: inset 0px 0px 3px rgb(175, 173, 173);  
+    height: 344px;  
+    overflow-y: scroll;
+}
+
+#table table {
+    border-width: 0px;
+}
+
+table > tbody > tr > td {
+    width: 20%;
+}
+
+table > tbody > tr > td > span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 150px;
+}
+
+#table table > thead > tr > th {
+    border-left-width: 0px; 
+    border-right-width: 0px;
+}
+
+#table table > thead {
+    border-top: 1px solid #dddddd;
+}
+
 // ~ позволяет вам ссылаться на вещи в node_modules
 @import '~bootstrap-sass/assets/stylesheets/bootstrap';

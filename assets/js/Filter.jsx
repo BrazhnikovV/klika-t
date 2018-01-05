@@ -3,9 +3,7 @@ var React = require('react');
 // импортировать ReactDom.js 
 var ReactDOM = require('react-dom');
 // импортировать  Table.js
-var Table = require('./Table');
-// импортировать TableData.js
-var TableData = require('./TableData');
+var Table = require('./Table').default;
 // импортировать TableHeaders.js
 var TableHeaders = require('./TableHeaders');
 // импортировать FilterSelects.js
@@ -28,9 +26,11 @@ class Filter extends React.Component {
       this.state = {
         headers : new TableHeaders(),
         selects : FilterSelects.getData(),
-        fields  : ['','','','','']
+        fields  : ['','','','',''],
+        is_filtering : false
       };      
-      this.onFilter = this.onFilter.bind(this);      
+      this.onFilter = this.onFilter.bind(this);
+      this.onSortedTable = this.onSortedTable.bind(this);      
   };
 
   /**
@@ -40,6 +40,8 @@ class Filter extends React.Component {
    * @return  {undefined}
    */
   render() {
+    console.log('### Filter call method => render');    
+
     const options = [];
 
     for (var i = 0; i < this.state.selects.length; ++i ) {
@@ -62,13 +64,53 @@ class Filter extends React.Component {
 
     return (
       <div className="row">
-        <div className="col-md-11 bg-info">
-          <div className="form-group col-md-12">
-            {select_groups}
+        <div className="col-md-9">
+          <div className="row">
+              <div className="col-md-12">
+                  <h2>Плэйлист</h2>
+              </div>          
+              <div className="col-md-12">
+                <Table 
+                  filter={this.state.fields} 
+                  is_filtering={this.state.is_filtering} 
+                  onSorted={this.onSortedTable}
+                />
+              </div>
+          </div>          
+        </div>          
+        <div className="col-md-3">
+          <div className="row">      
+            <div className="col-md-12">
+                <h2>Фильтр</h2>
+            </div>          
+            <div id="filter" className="col-md-12">
+              <div className="row">
+                <div className="col-md-11 bg-info">
+                  <div className="form-group col-md-12">
+                    {select_groups}
+                  </div>
+                </div>        
+              </div>
+            </div>
           </div>
         </div>
-      </div>        
+      </div>      
     );
+  };
+
+  /**
+   * onSortedTable - 
+   * 
+   * @access  {private}
+   * @param   {integer}  index - 
+   * @param   {object}   event - 
+   * @return  {undefined}
+   */
+  onSortedTable (index,event) {
+    console.log('### Filter call method => onSortedTable');
+    this.setState(prevState => ({
+      is_filtering: false
+    }));
   };
 
   /**
@@ -82,7 +124,6 @@ class Filter extends React.Component {
   onFilter (index,event) {
     console.log('### Filter call method => onFilter');
 
-    var table = new Table();
     var coll_index = event.target.value;
 
     if (coll_index === 'Все') {
@@ -90,9 +131,12 @@ class Filter extends React.Component {
     }
     else {
       this.state.fields[index] = coll_index;
-    }   
+    }
 
-    table.filtered(this.state.fields);
+    this.setState(prevState => ({
+      fields: this.state.fields,
+      is_filtering: true
+    }));
   };
 
   /**
@@ -102,7 +146,7 @@ class Filter extends React.Component {
    * @return  {undefined}
    */
   componentDidMount() {
-    
+    console.log('### Filter call method => componentDidMount');
   };
 
   /**
@@ -112,10 +156,8 @@ class Filter extends React.Component {
    * @return  {undefined}
    */
   componentWillUnmount() {
-    
+    console.log('### Filter call method => componentWillUnmount');
   }
 }
 
-module.exports = function(name) {
-  return ReactDOM.render(<Filter/>, document.getElementById('filter'));
-};
+export default Filter;
