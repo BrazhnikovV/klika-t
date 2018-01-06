@@ -36,10 +36,27 @@ class FilterSelects {
       for ( var j = 0; j < this.table_data.length; ++j ) {        
         inner_array.push(this.table_data[j][i]);
       }
-      input_array.push(inner_array);
+      let unic_array = this.unique(inner_array);
+      input_array.push(unic_array);
     }
 
     return input_array;
+  };
+
+  /**
+   * unique - 
+   * 
+   * @access  {private}
+   * @param   {array}   arr - 
+   * @return  {array}
+   */
+  unique (arr) {
+    var obj = {};
+    for(var i=0; i<arr.length; i++) {
+        var str = arr[i];
+        obj[str] = true;
+    }
+    return Object.keys(obj);
   };
 };
 

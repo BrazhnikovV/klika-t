@@ -79,10 +79,6 @@ class Table extends React.Component {
       offset = this.state.count_records * this.state.current_page;
       inner_array = this.state.data_dinamic.slice(offset, this.state.count_records + offset); 
     }
-
-    //console.log('=============================');
-    //console.log(this.state.current_page);
-    //console.log(inner_array);
     
     // формируем параметры для пространичной разбивки
     const all_count_records = this.state.data_dinamic.length;
@@ -247,23 +243,7 @@ class Table extends React.Component {
     this.setState(prevState => ({
       current_page: index
     }));
-  };
-
-  /**
-   * unique - 
-   * 
-   * @access  {private}
-   * @param   {array}   arr - 
-   * @return  {array}
-   */
-  unique (arr) {
-    var obj = {};
-    for(var i=0; i<arr.length; i++) {
-        var str = arr[i];
-        obj[str] = true;
-    }
-    return Object.keys(obj);
-  };
+  };  
 
   /**
    * componentDidMount - 
