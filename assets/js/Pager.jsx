@@ -18,9 +18,13 @@ class Pager extends React.Component {
   constructor(props) {      
       super(props);
       this.state = {
-        count_records : 10
+        count_records : 10,
+        prev_pgn_class : 'disabled',
+        next_pgn_class : 'disabled',
+        all_count_pages : 0
       };      
       this.onClick = this.onClick.bind(this);
+      this.lockPrevNextButton = this.lockPrevNextButton.bind(this);      
   };
 
   /**
@@ -30,13 +34,15 @@ class Pager extends React.Component {
    * @return  {undefined}
    */
   render() {
-    const all_count_pages = Math.ceil(this.props.all_count_records / this.props.count_records);
+    this.state.all_count_pages = Math.ceil(this.props.all_count_records / this.props.count_records);    
 
     let count_pages_array = [];
 
-    for ( let i = 0; i < all_count_pages; ++i ) {
+    for ( let i = 0; i < this.state.all_count_pages; ++i ) {
       count_pages_array[i] = i;
     }
+
+    this.lockPrevNextButton();
 
     const inner_array = count_pages_array.map((item, index) =>       
         <li 
@@ -51,13 +57,45 @@ class Pager extends React.Component {
       <div className="row">
         <div className="col-md-12">
           <ul className="pagination">
-            <li><a href="#">&laquo;</a></li>
+            <li 
+              onClick={this.onClick.bind(this, (this.props.current_page-1))} 
+              className={this.state.prev_pgn_class}>
+              <a href="#">&laquo;</a>
+            </li>
               {inner_array}
-            <li><a href="#">&raquo;</a></li>
+            <li 
+              onClick={this.onClick.bind(this, (this.props.current_page+1))} 
+              className={this.state.next_pgn_class}>
+              <a href="#">&raquo;</a>
+            </li>
           </ul>
         </div>
       </div>        
     );
+  };
+
+  /**
+   * lockPrevNextButton - 
+   * 
+   * @access  {private}
+   * @return  {undefined}
+   */
+  lockPrevNextButton() {
+    console.log('### Pager call method => lockPrevNextButton');
+
+    if ( this.props.current_page !== 0 ) {
+      this.state.prev_pgn_class = ''; 
+    }
+    else {
+      this.state.prev_pgn_class = 'disabled'; 
+    }
+
+    if ( this.props.current_page === (this.state.all_count_pages - 1) ) {
+      this.state.next_pgn_class = 'disabled'; 
+    }
+    else {
+      this.state.next_pgn_class = ''; 
+    }
   };
 
   /**
@@ -70,6 +108,18 @@ class Pager extends React.Component {
    */
   onClick (index,event) {
     console.log('### Pager call method => onClick');
+
+    if( this.state.all_count_pages === index ) {
+      console.log('### onClick => BLOCK');
+      event.preventDefault();
+      return false;
+    }    
+
+    if( index === -1 ) {
+      console.log('### onClick => BLOCK');
+      event.preventDefault();
+      return false;
+    }
 
     this.props.onPageClick(index);
   };

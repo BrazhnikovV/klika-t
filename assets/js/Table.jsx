@@ -70,9 +70,19 @@ class Table extends React.Component {
       </th>
     );
 
-    // отрезаем строки таблицы созласно CountRecords
-    const offset = this.state.count_records * this.state.current_page;
-    const inner_array = this.state.data_dinamic.slice(offset, this.state.count_records + offset); 
+    // отрезаем строки таблицы согласно CountRecords
+    let offset = this.state.count_records * this.state.current_page;
+    let inner_array = this.state.data_dinamic.slice(offset, this.state.count_records + offset); 
+
+    if ( inner_array.length === 0 ) {
+      this.state.current_page = 0;
+      offset = this.state.count_records * this.state.current_page;
+      inner_array = this.state.data_dinamic.slice(offset, this.state.count_records + offset); 
+    }
+
+    //console.log('=============================');
+    //console.log(this.state.current_page);
+    //console.log(inner_array);
     
     // формируем параметры для пространичной разбивки
     const all_count_records = this.state.data_dinamic.length;
