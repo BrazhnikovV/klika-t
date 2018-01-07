@@ -3,21 +3,6 @@ $brand-primary:         darken(#428bca, 20%);
 
 #filter > div > div {
     padding-top: 10px;
-    border: 1px solid #dddddd;
-    margin: 0px 15px;
-}
-#table { 
-    padding: 0px 5px 5px 5px;
-    background: #f9f6f6;
-    box-shadow: inset 0px 0px 3px rgb(175, 173, 173);  
-    height: 344px;  
-    overflow-y: scroll;
-}
-
-#table table {
-    border-width: 0px;
-    position: relative;
-    top: 33px;
 }
 
 table > tbody > tr > td {
@@ -30,12 +15,6 @@ table > tbody > tr > td {
     position: relative;
     cursor: pointer;
     width: 20%;
-}
-
-#table table > thead {
-    border-top: 1px solid #dddddd;
-    top: 63px;
-    border-right: 1px solid #dddddd;
 }
 
 .sorted {

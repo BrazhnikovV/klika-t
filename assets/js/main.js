@@ -16,15 +16,15 @@ var Filter = require('./Filter').default;
 //var create_filter = Filter();
 ReactDOM.render(<Filter/>, document.getElementById('root'));
 
-$().ready(function(){   
-    var tbody_td_width = $( "#table table > tbody > tr > td" ).outerWidth();
-    $('table > thead', this).css({'position':'fixed'});
-    $('table > thead > tr > th', this).css({'width': tbody_td_width+'px'});
-
-    $(window).on('resize', function() {
-        var resize_tbody_td_width = $( "#table table > tbody > tr > td" ).outerWidth();
-        $('#table table > thead > tr > th').css({'width': resize_tbody_td_width+'px'});
-    });
-});
+//$().ready(function(){   
+//    var tbody_td_width = $( "#table table > tbody > tr > td" ).outerWidth();
+//    $('table > thead', this).css({'position':'fixed'});
+//    $('table > thead > tr > th', this).css({'width': tbody_td_width+'px'})//;
+//
+//    $(window).on('resize', function() {
+//        var resize_tbody_td_width = $( "#table table > tbody > tr > td" ).outerWidth();
+//        $('#table table > thead > tr > th').css({'width': resize_tbody_td_width+'px'});
+//    });
+//});
 
 
