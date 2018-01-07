@@ -16,22 +16,14 @@ var Filter = require('./Filter').default;
 //var create_filter = Filter();
 ReactDOM.render(<Filter/>, document.getElementById('root'));
 
-$().ready(function(){    
-    $( "#table" ).scroll(function() {
-        var tbody_td_width = $( "#table table > tbody > tr > td" ).outerWidth();
-        if ( $(this).scrollTop() > 0 ) {
-            $('table > thead', this).css({'position':'fixed'});
-            $('table > thead > tr > th', this).css({'width': tbody_td_width+'px'});
-        }
-        else {
-            $('table > thead', this).css({'position':'inherit'});
-            $('table > thead > tr > th', this).css({'width': tbody_td_width+'px'});
-        }
-    });
+$().ready(function(){   
+    var tbody_td_width = $( "#table table > tbody > tr > td" ).outerWidth();
+    $('table > thead', this).css({'position':'fixed'});
+    $('table > thead > tr > th', this).css({'width': tbody_td_width+'px'});
 
-    $( window ).resize(function() {
+    $(window).on('resize', function() {
         var resize_tbody_td_width = $( "#table table > tbody > tr > td" ).outerWidth();
-        $('table > thead > tr > th', this).css({'width': resize_tbody_td_width+'px'});
+        $('#table table > thead > tr > th').css({'width': resize_tbody_td_width+'px'});
     });
 });
 

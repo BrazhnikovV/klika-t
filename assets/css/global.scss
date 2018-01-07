@@ -16,26 +16,47 @@ $brand-primary:         darken(#428bca, 20%);
 
 #table table {
     border-width: 0px;
+    position: relative;
+    top: 33px;
 }
 
 table > tbody > tr > td {
     width: 20%;
 }
 
-table > tbody > tr > td > span {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    min-width: 150px;
-}
-
 #table table > thead > tr > th {
     border-left-width: 0px; 
     border-right-width: 0px;
+    position: relative;
+    cursor: pointer;
+    width: 20%;
 }
 
 #table table > thead {
     border-top: 1px solid #dddddd;
+    top: 63px;
+    border-right: 1px solid #dddddd;
+}
+
+.sorted {
+    display: inline-block;
+    width: 19px;
+    height: 19px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    position: absolute;
+    right: 0px;
+}
+.sorted.disable {    
+    background-image: url('./images/sort_both.png');    
+}
+
+.sorted.asc {
+    background-image: url('./images/sort_asc.png');
+}
+
+.sorted.desc {
+    background-image: url('./images/sort_desc.png');
 }
 
 // ~ позволяет вам ссылаться на вещи в node_modules

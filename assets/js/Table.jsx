@@ -32,12 +32,15 @@ class Table extends React.Component {
         data_dinamic :   new TableData(),
         data_origin  :   new TableData(),
         count_records :  10,
-        states_headers : [false, false, false, false, false],
+        // mode - disable,asc,desc
+        states_headers : ['disable', 'disable', 'disable', 'disable', 'disable'],
         current_page : 0
       };      
 
-      this.onSorted = this.onSorted.bind(this);
-      this.filtered = this.filtered.bind(this);            
+      this.onSorted    = this.onSorted.bind(this);      
+      this.filtered    = this.filtered.bind(this);
+      this.sortedAsc   = this.sortedAsc.bind(this);
+      this.sortedDesc  = this.sortedDesc.bind(this);
       this.onPageClick = this.onPageClick.bind(this);
       this.onCountRecords = this.onCountRecords.bind(this);
   };
@@ -53,7 +56,7 @@ class Table extends React.Component {
 
     if (this.props.hasOwnProperty('is_filtering')) {
       if (this.props.is_filtering) {
-        var filtering_data = this.filtered(this.props.filter);
+        let filtering_data = this.filtered(this.props.filter);
         if(filtering_data.length !== 0) {
           this.state.data_dinamic = filtering_data;
         }
@@ -67,6 +70,7 @@ class Table extends React.Component {
       <th key={index} 
           onClick={this.onSorted.bind(this, index)}>
             {header}
+            <span className={"sorted "+this.state.states_headers[index]}></span>
       </th>
     );
 
@@ -133,49 +137,33 @@ class Table extends React.Component {
   onSorted (index) {
     console.log('### Table call method => onSorted');
 
-    if(!this.state.states_headers[index]) {
-      this.state.states_headers[index] = true;
+    let self = this;
+
+    if(this.state.states_headers[index] === 'disable' ) {
+
+      // Сбросить состояния всех заголовков при переходе к новому заголовку
+      for ( let i = 0; i < this.state.states_headers.length; i++ ) {
+        this.state.states_headers[i] = 'disable';
+      }
+
+      this.state.states_headers[index] = 'asc';
       this.state.data_dinamic.sort(function(a, b) {
-        if (a[index] < b[index]) {
-          return -1;
-        }
-        else if (a[index] > b[index]) {
-          return  1;
-        }
-        else{
-          if (a[index] < b[index]) {
-              return -1;
-          }
-          else if (a[index] > b[index]) {
-              return 1;
-          }
-          else {
-              return 0;
-          }
-        }
+        return self.sortedDesc(a, b, index);
       });      
     }
     else {
-      this.state.states_headers[index] = false;
-      this.state.data_dinamic.sort(function(a, b) {
-        if (a[index] > b[index]) {
-          return -1;
-        }
-        else if (a[index] < b[index]) {
-          return  1;
-        }
-        else{
-          if (a[index] > b[index]) {
-              return -1;
-          }
-          else if (a[index] < b[index]) {
-              return 1;
-          }
-          else {
-              return 0;
-          }
-        }
-      });
+      if(this.state.states_headers[index] === 'asc' ) {
+        this.state.states_headers[index] = 'desc';        
+        this.state.data_dinamic.sort(function(a, b) {
+          return self.sortedAsc(a, b, index);
+        });
+      }      
+      else {
+        this.state.states_headers[index] = 'asc';
+        this.state.data_dinamic.sort(function(a, b) {
+          return self.sortedDesc(a, b, index);
+        });
+      }
     }
 
     this.setState(prevState => ({
@@ -183,6 +171,68 @@ class Table extends React.Component {
     }));
 
     this.props.onSorted();
+  };
+
+  /**
+   * sortedAsc - 
+   * 
+   * @access  {private}
+   * @param   {integer}   index - 
+   * @param   {array}     a - элемент сортируемого массива
+   * @param   {array}     b - элемент сортируемого массива
+   * @return  {integer}
+   */
+  sortedAsc (a, b, index) {
+    //console.log('### Table call method => sortedAsc');
+
+    if (a[index] > b[index]) {
+      return -1;
+    }
+    else if (a[index] < b[index]) {
+      return  1;
+    }
+    else{
+      if (a[index] > b[index]) {
+          return -1;
+      }
+      else if (a[index] < b[index]) {
+          return 1;
+      }
+      else {
+          return 0;
+      }
+    }
+  };
+
+  /**
+   * sortedDesc - 
+   * 
+   * @access  {private}
+   * @param   {integer}   index - 
+   * @param   {array}     a - элемент сортируемого массива
+   * @param   {array}     b - элемент сортируемого массива
+   * @return  {integer}
+   */
+  sortedDesc (a, b, index) {
+    //console.log('### Table call method => sortedDesc');
+
+    if (a[index] < b[index]) {
+      return -1;
+    }
+    else if (a[index] > b[index]) {
+      return  1;
+    }
+    else{
+      if (a[index] < b[index]) {
+          return -1;
+      }
+      else if (a[index] > b[index]) {
+          return 1;
+      }
+      else {
+          return 0;
+      }
+    }
   };
 
   /**
@@ -205,7 +255,6 @@ class Table extends React.Component {
       } 
     }
 
-    //let unic_inner_array = this.unique(inner_array);
     let unic_input_array = [];
 
     for ( let i = 0; i < inner_array.length; ++i ) {
