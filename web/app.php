@@ -1,5 +1,10 @@
 <?php
 
+//echo '<pre>';
+//var_dump('asasas);
+//echo '</pre>';
+//exit();
+
 use Symfony\Component\HttpFoundation\Request;
 
 require __DIR__.'/../vendor/autoload.php';
